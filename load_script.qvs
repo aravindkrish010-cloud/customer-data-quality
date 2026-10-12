@@ -1,0 +1,45 @@
+// ============================================================
+// Customer Data Quality (CDM) – Qlik Sense load script
+// Upload the 4 CSV files first (Data load editor > DataFiles)
+// ============================================================
+
+// 1) Mapping: raw customer record -> clean master customer
+MasterMap:
+MAPPING LOAD CustomerID, MasterID
+FROM [lib://DataFiles/customer_master_mapping.csv]
+(txt, utf8, embedded labels, delimiter is ',', msq);
+
+// 2) Raw customer records (as they look in the source system)
+Customers_Raw:
+LOAD
+    CustomerID,
+    CustomerName                              AS RawName,
+    If(Len(Trim(Country))=0,'(missing)',Country)      AS RawCountry,
+    If(Len(Trim(SalesOwner))=0,'(missing)',SalesOwner) AS RawOwner
+FROM [lib://DataFiles/customers_raw.csv]
+(txt, utf8, embedded labels, delimiter is ',', msq);
+
+// 3) Bookings – each booking gets its clean MasterID via ApplyMap
+Bookings:
+LOAD
+    BookingID,
+    CustomerID,
+    ApplyMap('MasterMap', CustomerID, 'UNMATCHED') AS MasterID,
+    TradeLane,
+    Date(Date#(Month,'YYYY-MM'),'MMM YYYY')        AS Month,
+    TEU,
+    Revenue
+FROM [lib://DataFiles/bookings.csv]
+(txt, utf8, embedded labels, delimiter is ',', msq);
+
+// 4) Clean master data ("golden record") + a bucket for unmatched bookings
+Customer_Master:
+LOAD MasterID, MasterName, CountryClean, CustomerGroup, SalesOwnerClean
+FROM [lib://DataFiles/customer_master.csv]
+(txt, utf8, embedded labels, delimiter is ',', msq);
+
+Concatenate (Customer_Master)
+LOAD * INLINE [
+MasterID, MasterName, CountryClean, CustomerGroup, SalesOwnerClean
+UNMATCHED, Unmatched (no master record), -, -, -
+];

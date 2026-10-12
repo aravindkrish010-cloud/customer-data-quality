@@ -1,0 +1,21 @@
+CustomerID,CustomerName,Country,SalesOwner
+C001,Nordic Foods AB,SE,Lena Berg
+C002,NORDIC FOODS A.B.,Sweden,
+C003,Nordic Foods,Schweden,Lena Berg
+C004,Alpha Logistics GmbH,DE,Jonas Weber
+C005,Alpha Logistics G.m.b.H.,Germany,Jonas Weber
+C006,Pacific Fresh Ltd,SG,Wei Tan
+C007,Pacific Fresh Limited,,Wei Tan
+C008,Andes Fruit SA,CL,Carla Ruiz
+C009,Andes Fruit S.A.,Chile,
+C010,Bremen Machinery GmbH,DE,Jonas Weber
+C011,Atlantic Chem Inc,US,Mark Ellis
+C012,Atlantic Chemicals Inc.,USA,Mark Ellis
+C013,Shanghai Textiles Co,CN,Wei Tan
+C014,Rotterdam Retail BV,NL,Sanne de Vries
+C015,Med Olive Oil SpA,IT,Luca Romano
+C016,Gulf Plastics LLC,AE,
+C017,Baltic Paper AS,EE,Lena Berg
+C018,Iberia Wines SL,ES,Carla Ruiz
+C019,Iberia Wines S.L.,Spain,Carla Ruiz
+C020,Bremen Machinery,Deutschland,Jonas Weber
